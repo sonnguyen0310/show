@@ -1,4 +1,24 @@
 <resources>
-    <string name="app_name">TestHVN</string>
+    <string name="app_name">ShowMe</string>
     <string name="global_base_url">url here</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register.email">E-mail</string>
+    <string name="register.password">Mot de passe</string>
+    <string name="register.first_name">Prénom</string>
+    <string name="register.name">Nom</string>
+    <string name="register.date_of_birth">Date de naissance</string>
+    <string name="register.about">En m’inscrivant, j’accepte les Conditions générales de ShowMe.</string>
+    <string name="register.submit">Inscription</string>
+    <string name="common_error">Error</string>
+    <string name="common_ok">Ok</string>
+    <string name="common.loading">Loading</string>
+    <string name="register_missing_field">Please fill all field require</string>
+    <string name="register_invalid_email">Invalid email</string>
+    <string name="register_invalid_password">password must have 8 characters</string>
+    <string name="register_invalid_first_name">first name must have 2 characters</string>
+    <string name="register_invalid_last_name">last name must have 2 characters</string>
+    <string name="common.register">Créer un compte</string>
+    <string name="common.login">Connexion</string>
 </resources>
