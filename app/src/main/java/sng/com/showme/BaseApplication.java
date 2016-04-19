@@ -18,4 +18,7 @@ public class BaseApplication extends android.app.Application {
         return sInstance;
     }
 
+    public static String getGcmKey() {
+        return "";
+    }
 }

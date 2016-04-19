@@ -17,7 +17,7 @@ import javax.net.ssl.X509TrustManager;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
-import retrofit.http.Body;
+import retrofit.http.Field;
 import sng.com.showme.R;
 import sng.com.showme.model.Data;
 import sng.com.showme.model.UserSession;
@@ -99,16 +99,13 @@ public class ApiService implements ApiCall {
     }
 
 
-    public String getAppID() {
-        return "MlR6vYpYvLRxfibxE5cg0e73jXojL6jWFqXU6F8L";
-    }
-
-    public String getApiKEY() {
-        return "7BTXVX1qUXKUCnsngL8LxhpEHKQ8KKd798kKpD9W";
+    @Override
+    public Data<UserSession> register(@Field("email") String email, @Field("pwd") String pwd, @Field("dob") String dob, @Field("firstname") String firstname, @Field("lastname") String lastname, @Field("device_uiid") String device_uiid) {
+        return mApiCall.register(email, pwd, dob, firstname, lastname, device_uiid);
     }
 
     @Override
-    public Data<UserSession> register(@Body String json) {
-        return mApiCall.register(json);
+    public Data<UserSession> login(@Field("email") String email, @Field("pwd") String pwd, @Field("device_uiid") String device_uiid) {
+        return mApiCall.login(email,pwd,device_uiid);
     }
 }

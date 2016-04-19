@@ -7,6 +7,7 @@ import sng.com.showme.model.UserSession;
  * Created by son.nguyen on 4/18/2016.
  */
 public interface UserService {
-    Data<UserSession> register(String json);
-    Data<UserSession> login(String json);
+    Data<UserSession> register(String email, String pwd, String dob, String firstname, String lastname, String device_uiid);
+
+    Data<UserSession> login(String email, String pwd, String device_uiid);
 }

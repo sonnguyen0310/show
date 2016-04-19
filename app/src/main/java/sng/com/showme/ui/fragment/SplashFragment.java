@@ -71,6 +71,6 @@ public class SplashFragment extends BaseFragment {
 
     @OnClick(R.id.btn_login)
     void onClickLogin() {
-
+replaceFragmmentWithStack(LoginFragment.newInstance(),LoginFragment.class.getName());
     }
 }
