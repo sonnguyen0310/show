@@ -13,11 +13,11 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import sng.com.showme.BaseApplication;
 import sng.com.showme.R;
 import sng.com.showme.loader.LoginLoader;
 import sng.com.showme.model.Data;
 import sng.com.showme.model.UserSession;
+import sng.com.showme.service.apiRequestModel.UserReturn;
 import sng.com.showme.util.Constant;
 import sng.com.showme.util.Utils;
 
@@ -65,16 +65,16 @@ public class LoginFragment extends BaseFragment {
         getLoaderManager().restartLoader(LOADER_LOGIN, null, mLoginLoaderCallBack);
     }
 
-    private LoaderManager.LoaderCallbacks<Data<UserSession>> mLoginLoaderCallBack = new LoaderManager.LoaderCallbacks<Data<UserSession>>() {
+    private LoaderManager.LoaderCallbacks<Data<UserReturn>> mLoginLoaderCallBack = new LoaderManager.LoaderCallbacks<Data<UserReturn>>() {
         @Override
-        public Loader<Data<UserSession>> onCreateLoader(int id, Bundle args) {
-            return new LoginLoader(getContext(), mEdtEmail.getText().toString(), mEditTextPass.getText().toString(), BaseApplication.getGcmKey());
+        public Loader<Data<UserReturn>> onCreateLoader(int id, Bundle args) {
+            return new LoginLoader(getContext(), mEdtEmail.getText().toString(), mEditTextPass.getText().toString(),UserSession.getInstance().getDeviceUiid());
         }
 
         @Override
-        public void onLoadFinished(Loader<Data<UserSession>> loader, Data<UserSession> data) {
+        public void onLoadFinished(Loader<Data<UserReturn>> loader, Data<UserReturn> data) {
             if (data != null && data.getReturnCode() == Constant.API_RETURN_CODE_SUCCESS) {
-                UserSession.setUserSession(data.getData());
+                UserSession.setUserSession(data.getData().getUser());
                 showToast("Login success");
             } else {
                 if (data != null) {
@@ -89,11 +89,11 @@ public class LoginFragment extends BaseFragment {
                 }
 
             }
-
         }
 
+
         @Override
-        public void onLoaderReset(Loader<Data<UserSession>> loader) {
+        public void onLoaderReset(Loader<Data<UserReturn>> loader) {
 
         }
     };

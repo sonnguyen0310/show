@@ -23,6 +23,7 @@ import sng.com.showme.R;
 import sng.com.showme.loader.RegisterLoader;
 import sng.com.showme.model.Data;
 import sng.com.showme.model.UserSession;
+import sng.com.showme.service.apiRequestModel.UserReturn;
 import sng.com.showme.util.Constant;
 import sng.com.showme.util.Utils;
 
@@ -119,38 +120,38 @@ public class RegisterFragment extends BaseFragment {
     }
 
 
-    LoaderManager.LoaderCallbacks<Data<UserSession>> mRegisterCallBack = new LoaderManager.LoaderCallbacks<Data<UserSession>>() {
+    LoaderManager.LoaderCallbacks<Data<UserReturn>> mRegisterCallBack = new LoaderManager.LoaderCallbacks<Data<UserReturn>>() {
         @Override
-        public Loader<Data<UserSession>> onCreateLoader(int id, Bundle args) {
+        public Loader<Data<UserReturn>> onCreateLoader(int id, Bundle args) {
             return new RegisterLoader(getContext(), mEmail.getText().toString(),
                     mPassword.getText().toString(),
                     mDob,
                     mFirstName.getText().toString(),
                     mLastName.getText().toString(),
-                    "");
+                    UserSession.getInstance().getDeviceUiid());
         }
 
         @Override
-        public void onLoadFinished(Loader<Data<UserSession>> loader, Data<UserSession> data) {
+        public void onLoadFinished(Loader<Data<UserReturn>> loader, Data<UserReturn> data) {
             if (data != null && data.getReturnCode() == Constant.API_RETURN_CODE_SUCCESS) {
-                UserSession.setUserSession(data.getData());
+                UserSession.setUserSession(data.getData().getUser());
                 showToast("Register success");
             } else {
                 if (data != null) {
+                    showConfirmDialog(getString(R.string.common_error), getString(R.string.common_ok), false, null);
+                } else {
                     showConfirmDialog(data.getMessage(), getString(R.string.common_error), true, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             getLoaderManager().restartLoader(LOADER_REGISTER, null, mRegisterCallBack);
                         }
                     });
-                } else {
-                    showConfirmDialog(getString(R.string.common_error), getString(R.string.common_ok), false, null);
                 }
             }
         }
 
         @Override
-        public void onLoaderReset(Loader<Data<UserSession>> loader) {
+        public void onLoaderReset(Loader<Data<UserReturn>> loader) {
 
         }
     };
@@ -162,8 +163,16 @@ public class RegisterFragment extends BaseFragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar date = Calendar.getInstance();
                 date.set(year, monthOfYear, dayOfMonth);
-                mDob = year + "-" + monthOfYear + "-" + dayOfMonth;
-                mBirthDate.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+                String month = "" + monthOfYear;
+                String day = "" + dayOfMonth;
+                if (monthOfYear < 10) {
+                    month = "0" + monthOfYear;
+                }
+                if (dayOfMonth < 10) {
+                    day = "0" + dayOfMonth;
+                }
+                mDob = year + "-" + month + "-" + day;
+                mBirthDate.setText(day + "/" + month + "/" + year);
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));

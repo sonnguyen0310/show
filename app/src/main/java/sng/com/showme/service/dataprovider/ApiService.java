@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.security.cert.CertificateException;
+import java.util.HashMap;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -17,10 +18,10 @@ import javax.net.ssl.X509TrustManager;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
-import retrofit.http.Field;
+import retrofit.http.Body;
 import sng.com.showme.R;
 import sng.com.showme.model.Data;
-import sng.com.showme.model.UserSession;
+import sng.com.showme.service.apiRequestModel.UserReturn;
 
 /**
  * Created by son.nguyen on 3/19/2016.
@@ -99,13 +100,14 @@ public class ApiService implements ApiCall {
     }
 
 
+
     @Override
-    public Data<UserSession> register(@Field("email") String email, @Field("pwd") String pwd, @Field("dob") String dob, @Field("firstname") String firstname, @Field("lastname") String lastname, @Field("device_uiid") String device_uiid) {
-        return mApiCall.register(email, pwd, dob, firstname, lastname, device_uiid);
+    public Data<UserReturn> register(@Body HashMap<String, String> body) {
+        return mApiCall.register(body);
     }
 
     @Override
-    public Data<UserSession> login(@Field("email") String email, @Field("pwd") String pwd, @Field("device_uiid") String device_uiid) {
-        return mApiCall.login(email,pwd,device_uiid);
+    public Data<UserReturn> login(@Body HashMap<String, String> body) {
+        return mApiCall.login(body);
     }
 }

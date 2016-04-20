@@ -4,13 +4,13 @@ import android.content.Context;
 
 import sng.com.showme.exception.UserException;
 import sng.com.showme.model.Data;
-import sng.com.showme.model.UserSession;
+import sng.com.showme.service.apiRequestModel.UserReturn;
 import sng.com.showme.service.impl.DefaultServiceFactory;
 
 /**
  * Created by son.nguyen on 4/18/2016.
  */
-public class RegisterLoader extends BaseLoader<Data<UserSession>> {
+public class RegisterLoader extends BaseLoader<Data<UserReturn>> {
     String body;
     String mEmail;
     String mPwd;
@@ -31,7 +31,7 @@ public class RegisterLoader extends BaseLoader<Data<UserSession>> {
     }
 
     @Override
-    protected Data<UserSession> doLoadInBackground() throws UserException {
+    protected Data<UserReturn> doLoadInBackground() throws UserException {
         return DefaultServiceFactory.getsInstance(getContext()).getImpUserService().register(mEmail,mPwd,mDob,mFirstName,mLastname,mDevice_uiid);
     }
 }

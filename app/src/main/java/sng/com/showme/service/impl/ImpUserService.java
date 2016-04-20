@@ -1,9 +1,11 @@
 package sng.com.showme.service.impl;
 
+import java.util.HashMap;
+
 import sng.com.showme.BaseApplication;
 import sng.com.showme.model.Data;
-import sng.com.showme.model.UserSession;
 import sng.com.showme.service.UserService;
+import sng.com.showme.service.apiRequestModel.UserReturn;
 import sng.com.showme.service.dataprovider.ApiService;
 
 /**
@@ -12,13 +14,24 @@ import sng.com.showme.service.dataprovider.ApiService;
 public class ImpUserService implements UserService {
 
     @Override
-    public Data<UserSession> register(String email, String pwd, String dob, String firstname, String lastname, String device_uiid) {
-        return ApiService.getInstance(BaseApplication.getContext()).register(email, pwd, dob, firstname, lastname, device_uiid);
+    public Data<UserReturn> register(String email, String pwd, String dob, String firstname, String lastname, String device_uiid) {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("email",email);
+        body.put("pwd",pwd);
+        body.put("dob",dob);
+        body.put("firstname",firstname);
+        body.put("lastname",lastname);
+        body.put("device_uiid",device_uiid);
+        return ApiService.getInstance(BaseApplication.getContext()).register(body);
     }
 
     @Override
-    public Data<UserSession> login(String email, String pwd, String device_uiid) {
-        return ApiService.getInstance(BaseApplication.getContext()).login(email, pwd, device_uiid);
+    public Data<UserReturn> login(String email, String pwd, String device_uiid) {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("email", email);
+        body.put("pwd", pwd);
+        body.put("device_uiid", device_uiid);
+        return ApiService.getInstance(BaseApplication.getContext()).login(body);
     }
 
 }

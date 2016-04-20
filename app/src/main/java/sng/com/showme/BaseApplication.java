@@ -8,6 +8,7 @@ import android.content.Context;
 public class BaseApplication extends android.app.Application {
     private static BaseApplication sInstance;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -21,4 +22,6 @@ public class BaseApplication extends android.app.Application {
     public static String getGcmKey() {
         return "";
     }
+
+
 }
